@@ -1,40 +1,57 @@
-const ANIMATIONS = {
-  "butterfly": [ASCII_ANIM_BUTTERFLY, 3],
-  "horse":     [ASCII_ANIM_HORSES,    5],
-  "bird":      [ASCII_ANIM_BIRD,      1]
-};
+function asciianim() {
+    const loader = document.getElementById('loader');
+    const shell = document.getElementById('shell');
 
-const ANIMATION_KEYS = Object.keys(ANIMATIONS);
-const ANIMATION_NAME = ANIMATION_KEYS[Math.floor(Math.random() * ANIMATION_KEYS.length)];
-const LOOPS = ANIMATIONS[ANIMATION_NAME][1];
-const FRAME_MS = 120;
-const el = document.getElementById('ascii-frame');
-const dots = document.getElementById('dots');
-const loader = document.getElementById('loader');
-const page = document.getElementById('page');
-let frameIdx = 0, loop = 0;
-let dotsState = 0;
+    if (sessionStorage.getItem('loaderPlayed')) {
+        loader.style.display = 'none';
+        shell.style.transition = 'none';
+        shell.classList.add('visible');
+        return;
+    }
 
-setInterval(() => {
-	dotsState = (dotsState + 1) % 4;
-	dots.textContent = '.'.repeat(dotsState) || '   ';
-}, 400);
+    const FRAMES_MS = 120;
+    const el = document.getElementById('ascii-frame');
+    const dots = document.getElementById('dots');
 
-function renderFrame(frames) {
-	el.textContent = frames[frameIdx].join('\n');
-	if (!el.classList.contains('visible')) el.classList.add('visible');
+    let frameidx = 0, loop = 0, dotstate = 0;
 
-	frameIdx++;
-	if (frameIdx >= frames.length) {
-		frameIdx = 0;
-		loop++;
-		if (loop >= LOOPS) {
-			loader.classList.add('done');
-			page.classList.add('visible');
-			return;
-		}
-	}
-	setTimeout(() => renderFrame(frames), FRAME_MS);
+    const ANIMATIONS = {
+        butterfly: [typeof ASCII_ANIM_BUTTERFLY !== 'undefined' ? ASCII_ANIM_BUTTERFLY : null, 3],
+        horse: [typeof ASCII_ANIM_HORSE !== 'undefined' ? ASCII_ANIM_HORSE : null, 5],
+        bird: [typeof ASCII_ANIM_BIRD !== 'undefined' ? ASCII_ANIM_BIRD : null, 1],
+    };
+
+    const validkeys = Object.keys(ANIMATIONS).filter(k => ANIMATIONS[k][0]);
+    const pickedkey = validkeys[Math.floor(Math.random() * validkeys.length)];
+    const FRAMES = ANIMATIONS[pickedkey][0];
+    const LOOPS = ANIMATIONS[pickedkey][1];
+
+    const dotInterval = setInterval(() => {
+        dotstate = (dotstate + 1) % 4;
+        dots.textContent = '.'.repeat(dotstate) || '   ';
+    }, 400);
+
+    function renderframes(frames) {
+        el.textContent = frames[frameidx].join('\n');
+        if (!el.classList.contains('visible')) {
+            el.classList.add('visible');
+        }
+
+        frameidx++;
+        if (frameidx >= frames.length) {
+            frameidx = 0;
+            if (++loop >= LOOPS) {
+                clearInterval(dotInterval);
+                loader.classList.add('done');
+                shell.classList.add('visible');
+                sessionStorage.setItem('loaderPlayed', '1');
+                return;
+            }
+        }
+        setTimeout(() => renderframes(frames), FRAMES_MS);
+    }
+
+    setTimeout(() => renderframes(FRAMES), 200);
 }
 
-setTimeout(() => renderFrame(ANIMATIONS[ANIMATION_NAME][0]), 200);
+asciianim();

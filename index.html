@@ -1,29 +1,37 @@
 <!DOCTYPE html>
+
 <html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>h0p3so - juan diego's archive</title>
+		<link rel="stylesheet" href="common/common-styles.css">
+		<link rel="stylesheet" href="./index.css">
+	</head>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>h0p3so - juan diego's archive</title>
-	<link rel="stylesheet" href="index.css">
-</head>
+	<body>
+		<div id="loader">
+			<pre id="ascii-frame"></pre>
+			<div id="status">h0p3so - juan diego's archive<span id="dots">.</span></div>
+		</div>	
 
-<body>
-	<div id="loader">
-		<pre id="ascii-frame"></pre>
-		<div id="status">h0p3so - juan diego's archive<span id="dots">.</span></div>
-	</div>
+		<div id="shell">
+			<main id="content">
+				<div>
+					<h1 class="home-title">h0p3so</h1>
+					<p class="home-sub">juan diego's archive</p>
+				</div>
+			</main>
+			<nav id="sidebar">
+				<div id="nav-grid"></div>
+			</nav>
+		</div>
 
-	<div id="page">
-		<h1 class="page-title">Welcome</h1>
-	</div>
-
-
-	<script src="./ascii-animations/butterfly.js"></script>
-	<script src="./ascii-animations/horse.js"></script>
-	<script src="./ascii-animations/bird.js"></script>
-	<script src="./index.js"></script>
-</body>
+		<script src="./ascii/anims/bird.js"></script>
+		<script src="./ascii/anims/horse.js"></script>
+		<script src="./ascii/anims/butterfly.js"></script>
+		<script src="./common/nav.js"></script>
+		<script src="./index.js"></script>
+		<script>buildNav('home', '.');</script>
+	</body>
 </html>
-
-

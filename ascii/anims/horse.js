@@ -1,4 +1,4 @@
-const ASCII_ANIM_HORSES = [
+const ASCII_ANIM_HORSE = [
   [
     "                                                                                                                                                                                           ",
     "                                                                                                                                                                                           ",
