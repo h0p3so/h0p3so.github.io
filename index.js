@@ -1,4 +1,4 @@
-function asciianim() {
+function showAsciiAnimation () {
     const loader = document.getElementById('loader');
     const shell = document.getElementById('shell');
 
@@ -54,4 +54,4 @@ function asciianim() {
     setTimeout(() => renderframes(FRAMES), 200);
 }
 
-asciianim();
+showAsciiAnimation();
